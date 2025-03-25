@@ -47,5 +47,5 @@ export class CreateUserDto {
     description: 'Rol de usuario',
     example: '',
   })
-  role: UserRoleEnum;
+  role?: UserRoleEnum;
 }

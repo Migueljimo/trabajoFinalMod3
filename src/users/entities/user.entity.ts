@@ -14,8 +14,7 @@ import {
   }
   
   @Entity('users')
-  @Unique(['login'])
-  @Unique(['email'])
+  @Unique(['login', 'email'])
   export class User {
     @PrimaryGeneratedColumn()
     id: number;

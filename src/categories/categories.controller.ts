@@ -25,6 +25,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Books } from 'src/books/entities/book.entity';
+import { UseGuards, SetMetadata } from '@nestjs/common';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { UserRoleEnum } from '../users/entities/user.entity';
 
 @ApiBearerAuth('access-token')
 @ApiTags('categories')
@@ -38,6 +41,8 @@ export class CategoriesController {
     description: 'Categoría creada',
   })
   @Post()
+  @UseGuards(RolesGuard) // 🔐 Aplica el guardia
+  @SetMetadata('roles', [UserRoleEnum.ADMIN]) // 🛡️ Solo ADMIN
   create(@Body() createCategoryDto: CreateCategoryDto, @Request() request) {
     return this.categoriesService.create(
       createCategoryDto,
@@ -118,6 +123,8 @@ export class CategoriesController {
   })
   @Delete(':id')
   @HttpCode(204)
+  @UseGuards(RolesGuard) //  Añadir guardia
+  	@SetMetadata('roles', [UserRoleEnum.ADMIN]) //Solo ADMIN
   async remove(
     @Param('id') id: number,
     @Query('cascade', new DefaultValuePipe(false), ParseBoolPipe)
