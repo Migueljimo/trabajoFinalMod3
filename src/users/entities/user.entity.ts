@@ -40,7 +40,7 @@ import {
     @Column({ default: false })
     enabled: boolean;
   
-    @Column({ nullable: true })
+    @Column({ type: "enum", enum: UserRoleEnum, default: UserRoleEnum.USER })
     role: UserRoleEnum;
   
     @CreateDateColumn({ type: 'timestamp without time zone', select: false })
